@@ -1,0 +1,3 @@
+# blognaja
+
+Golang Workshop Blog
