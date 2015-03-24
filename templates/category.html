@@ -1,0 +1,104 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Maxkung Blognaja</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/static/lib/bootstrap-theme-white-plum/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/static/lib/animate.css/animate.css" />
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/bubbles.css">
+  </head>
+  <body ng-app="blogWebApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="container" style="width:1024px;max-width:1024px" ng-controller="CategoryCtrl">
+        <div class="navbar">
+          <div class="navbar-header">
+            <a href="#" class="navbar-brand">BlogNaja v0.0001</a>
+          </div>
+          <div class="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li> 
+                <a href="/">Blog</a>
+              </li>
+              <li style="background-color:#f5f5f5">
+                <a href="category">Category</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="messagebox panel panel-default" style="float:left;width:40%">
+            <div class="panel-heading">
+                <h1>Category list</h1> 
+            </div>
+            <div scroll-glue class="panel-body" style="height: 500px; max-height: 80%; overflow-y: scroll;">
+                <span ng-bind="loading"></span>
+                <section ng-repeat="blog in blogs" ng-hide="loading != ''">
+                    <!-- <small class="text-info" ng-show="message.type === 'joined_message'"><i>[<b ng-bind="message.username"></b>]</i> joined </small>-->
+                    <blockquote>
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <span class="text-info" style="content:none" ng-bind="blog.value.createon"></span>
+                                <p><span style="cursor:pointer" ng-bind="blog.value.title" ng-click="getblogedit(blog.id)"></span></p>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                 <button type="button" class="btn btn-xs btn-danger" ng-click="deleteblog(blog.id)">Delete</button>   
+                            </div>
+                        </div>
+                        <small class="text-muted" am-time-ago="blog.value.createon"></small>
+                    </blockquote>
+                </section>
+            </div>
+        </div>
+        <div class="usernamebox panel panel-primary" ng-class="{'panel-primary': blogeditkey == '','panel-success': blogeditkey != ''}" style="float:right;width:55%">
+            <div class="panel-heading" >
+                <h1 ng-bind="headtitle"></h1>
+            </div>
+            <div class="panel-body">
+                <label ng-hide="working == false">Loading Data ...</label>
+                <form class="form-horizontal" ng-submit="saveblog(blogeditkey)" ng-hide="working == true">
+                    <label for="blogtitle">Title:</label>
+                    <input id="blogtitle" class="form-control" ng-model="blogTitle">
+                    <br/>
+                    <label for="content">Description:</label>
+                    <textarea id="content" class="form-control" ng-model="blogContent" rows="10" style="resize:none"></textarea>
+                    <br/>
+                    <button type="submit" class="btn btn-default" ng-class="{'btn-default': blogeditkey == '','btn-success': blogeditkey != ''}">Save</button> 
+                    <button type="button" class="btn btn-default" ng-class="{'btn-default': blogeditkey == '','btn-success': blogeditkey != ''}" 
+                    ng-hide="blogeditkey == ''" ng-click="canceledit()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer" style="text-align: center" style="clear:both">
+        <p>Home made by ♥ Maxkung ♥</p>
+    </div>
+
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/static/lib/angular/angular.js"></script>
+    <script src="/static/lib/angular-animate/angular-animate.min.js"></script>
+    <script src="/static/lib/moment/min/moment.min.js"></script>
+    <script src="/static/lib/angular-moment/angular-moment.min.js"></script>
+    <script src="/static/lib/angularjs-scroll-glue/src/scrollglue.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="/static/scripts/app.js"></script>
+        <script src="/static/scripts/controllers/category.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
